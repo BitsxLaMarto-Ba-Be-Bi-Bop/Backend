@@ -279,9 +279,9 @@ class IA:
     # Ejemplo de uso
     # model = load_best_model("Death", model_paths)
     def predict(self, input_data):
-        return {self.model_paths[0]: self._models[0].predict(self.test(input_data)),
-                self.model_paths[1]: self._models[1].predict(self.test(input_data)),
-                self.model_paths[2]: self._models[2].predict(self.test(input_data))}
+        return {"Death": self._models[0].predict(self.test(input_data)),
+                        "Binary diagnosis": self._models[1].predict(self.test(input_data)),
+                        "Necessity of transplantation": self._models[2].predict(self.test(input_data))}
     
     def predict_with_model(self, input_data, target, model_dir="best_models"):
 
