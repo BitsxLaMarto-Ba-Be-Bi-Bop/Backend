@@ -54,6 +54,8 @@ class UserService(BaseService):
             raise HTTPException(status_code=404,detail='Doctor or Patient not found')
         if patient in doctor.patients:
             raise HTTPException(status_code=400,detail='Patient already assigned to doctor')
-        doctor.patients.append(patient)
+        # doctor.patients.append(patient)
+        t=Trates(doctor_id=doctor_id,patient_id=patient_id)
+        db.session.add(t)
         db.session.commit()
         return doctor
