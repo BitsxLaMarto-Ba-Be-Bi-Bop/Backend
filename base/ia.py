@@ -246,7 +246,7 @@ class IA:
         r = {k: 0 for k in self.inp}
         return {k: dict[k] if k in dict else v for k, v in r.items()}
     def load_models(self):
-        return [self.load_models(_, self.model_paths) for _ in self.model_paths.keys()]
+        return [self.load_best_model(_, self.model_paths) for _ in self.model_paths.keys()]
     def load_best_model(target, model_paths):
         """
         Carga un modelo guardado para una variable objetivo específica desde rutas específicas.
