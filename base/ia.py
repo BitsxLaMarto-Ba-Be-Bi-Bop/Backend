@@ -234,11 +234,11 @@ class IA:
     ]
     _instance = None
     _models=[]
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
+    def __init__(self):
+        if not self._instance:
             # cls._instance = super(IA, cls).__new__(cls, *args, **kwargs)
-            cls._models = cls.load_models()
-        return cls._instance
+            self._models = self.load_models()
+        return self._instance
 
 
 
