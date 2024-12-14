@@ -16,7 +16,8 @@ def get_appoinments():
     return appointment_service.get_all()
 
 @router.post("/appoinments")
-def create_appoinment(payload: AppointmentCreate):
+def create_appoinment(payload: AppointmentCreate, token:BaseToken=Depends(JWTBearer())):
+    payload.patient_id = token.id
     return appointment_service.create(payload)
 
 
