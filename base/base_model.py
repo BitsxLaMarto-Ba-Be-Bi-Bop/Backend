@@ -2,14 +2,14 @@
 from datetime import date
 
 from sqlalchemy import Column, DateTime
-# from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.orm import DeclarativeBase
 
 
-class BaseModel(DeclarativeBase):
+class ModelBase(object):
     __allow_unmapped__ = True
     created_at = Column(DateTime, default=date.today())
     updated_at = Column(DateTime, default=date.today(), onupdate=date.today())
 
 
-# BaseModel = declarative_base(cls=ModelBase)
+BaseModel = declarative_base(cls=ModelBase)

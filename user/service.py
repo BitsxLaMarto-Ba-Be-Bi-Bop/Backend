@@ -12,7 +12,8 @@ class UserService(BaseService):
     name = 'user_service'
     __model__ = User
 
-
+    def get_by_mail(self, mail: str):
+        return db.session.query(self.__model__).filter(self.__model__.email == mail).first()
 
     def register_doctor(self,payload: UserDoctorCreate):
         doctor = UserDoctor(**payload.model_dump(exclude={'password'}))
