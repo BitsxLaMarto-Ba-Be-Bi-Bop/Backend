@@ -5,12 +5,14 @@ from sqlalchemy import create_engine
 from base.base_model import BaseModel
 from base.base_schema import BaseSchema
 from base.base_token import BaseToken
+from base.jwt_bearer import JWTBearer
 from user.model import User
 from user.router import router as user
 from base.settings import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
 from user.service import UserService
+from base.ia import *
 
 from user_patient.model import UserPatient
 from user_doctor.model import UserDoctor
@@ -46,7 +48,9 @@ def login(credentials: LoginIn):
     return {"token": BaseToken(user).to_token()}
     # return auth_service.login(credentials.username, credentials.password)
 
-# admin_app.add_de
+@app.get("/me", summary="Get current user")
+def me(token: BaseToken = Depends(JWTBearer())):
+    return token
 
 for route in app.routes:
     if isinstance(route, APIRoute):
