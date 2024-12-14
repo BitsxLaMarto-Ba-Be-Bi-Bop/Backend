@@ -42,7 +42,10 @@ user_service: UserService = UserService()
 class LoginIn(BaseSchema):
     mail: str
     password: str
-
+@app.post("/predict", summary="Predict")
+def predict(data: dict):
+    ia=IA()
+    return ia.predict(data)
 @app.post("/login", summary="Authenticate User")
 def login(credentials: LoginIn):
     user:User = user_service.get_by_mail(credentials.mail)
