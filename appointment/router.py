@@ -34,6 +34,6 @@ def update_appoinment(id: int, payload: AppointmentCreate):
 def delete_appoinment(id: int):
     return appointment_service.delete(id)
 
-@router.get("/appoinments/user/{user_id}")
+@router.get("/appoinments/mine/")
 def get_appoinment_by_user(token:BaseToken= Depends(JWTBearer())):
     return appointment_service.get_mine(token.id)
