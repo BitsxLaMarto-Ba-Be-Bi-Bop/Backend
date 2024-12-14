@@ -48,7 +48,7 @@ def register_patient(patient: UserPatientCreate):
     return new_patient
 
 @router.get("/users/patients/untrated")
-def get_untrated_patients(token:BaseToken=Depends(JWTBearer())):
+def get_untrated_patients():#token:BaseToken=Depends(JWTBearer())):
     untrated_patients = user_service.get_untrated_paients()
     return untrated_patients
 
