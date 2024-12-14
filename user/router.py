@@ -37,7 +37,7 @@ def delete_user(user_id: int, token:BaseToken=Depends(JWTBearer())):
     return {"detail": "User deleted successfully"}
 
 
-@router.post("/users/doctors")
+@router.post("/users/doctors/")
 def register_doctor(doctor: UserDoctorCreate):
     new_doctor = user_service.register_doctor(doctor)
     return new_doctor
@@ -48,7 +48,7 @@ def register_patient(patient: UserPatientCreate):
     return new_patient
 
 @router.get("/users/patients/untrated")
-def get_untrated_patients():#token:BaseToken=Depends(JWTBearer())):
+def get_untrated_patients(token:BaseToken=Depends(JWTBearer())):
     untrated_patients = user_service.get_untrated_paients()
     return untrated_patients
 
