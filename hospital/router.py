@@ -37,3 +37,7 @@ def delete_hospital(hospital_id: int):
         raise HTTPException(status_code=404, detail="Hospital not found")
     return {"message": "Hospital deleted successfully"}
 
+@router.get("/hospitals/generate/")
+def generate_hospitals():
+    hospitals = hospital_service.create_all()
+    return {"message": f"{len(hospitals)} hospitals generated successfully", "hospitals": hospitals}
