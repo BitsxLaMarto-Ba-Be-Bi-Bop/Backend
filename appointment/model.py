@@ -13,5 +13,5 @@ class Appointment(BaseModel):
     doctor_acception = Column(Boolean, nullable=False, default=False)
     appointment_date = Column(DateTime, nullable=False)
     reason: str = Column(String, nullable=False)
-    doctor = relationship("User", foreign_keys=[doctor_id])
-    patient = relationship("User", foreign_keys=[patient_id])
+    doctor = relationship("UserDoctor", foreign_keys=[doctor_id])
+    patient = relationship("UserPatient", foreign_keys=[patient_id])
