@@ -7,8 +7,10 @@ class AppointmentCreate(BaseSchema):
     doctor_id: int
     patient_id: int
     appointment_date: datetime
+    reason:str
 
 class AppointmentGet(BaseSchema):
     doctor_id: int
     patient_id: int
     appointment_date: datetime
+    reason:str
