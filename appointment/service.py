@@ -7,7 +7,8 @@ class AppointmentService(BaseService):
     __model__ = Appointment
 
     def accept_appointment(self, appointment_id: int):
-        appointment = self.get_by_id(appointment_id)
-        appointment.is_accepted = True
+        appointment:Appointment = self.get_by_id(appointment_id)
+        appointment.doctor_acception = True
         self.update(appointment)
         return appointment
+    

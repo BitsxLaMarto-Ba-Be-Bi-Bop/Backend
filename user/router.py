@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from base.base_token import BaseToken
+from base.jwt_bearer import JWTBearer
 from user.schema import UserCreate
 from user.service import UserService
 from user_doctor.schema import UserDoctorCreate
@@ -21,14 +23,14 @@ def create_user(user: UserCreate):
     return new_user
 
 @router.put("/users/{user_id}")
-def update_user(user_id: int, user: UserCreate):
+def update_user(user_id: int, user: UserCreate, token:BaseToken=Depends(JWTBearer())):
     updated_user = user_service.update(user_id, user)
     if not updated_user:
         raise HTTPException(status_code=404, detail="User not found")
     return updated_user
 
 @router.delete("/users/{user_id}")
-def delete_user(user_id: int):
+def delete_user(user_id: int, token:BaseToken=Depends(JWTBearer())):
     deleted = user_service.delete(user_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="User not found")
@@ -46,21 +48,21 @@ def register_patient(patient: UserPatientCreate):
     return new_patient
 
 @router.get("/users/patients/untrated")
-def get_untrated_patients():
+def get_untrated_patients(token:BaseToken=Depends(JWTBearer())):
     untrated_patients = user_service.get_untrated_paients()
     return untrated_patients
 
 @router.get("/users/patients/trated/{doctor_id}")
-def get_trated_patients(doctor_id: int):
+def get_trated_patients(doctor_id: int, token:BaseToken=Depends(JWTBearer())):
     trated_patients = user_service.get_trated_paients(doctor_id)
     return trated_patients
 
 @router.get("/users/doctors/")
-def get_doctors():
+def get_doctors(token:BaseToken=Depends(JWTBearer())):
     doctors = user_service.get_doctors()
     return doctors
 
 @router.post("/users/doctors/{doctor_id}/patients/{patient_id}")
-def asign_patient_to_doctor(doctor_id: int, patient_id: int):
+def asign_patient_to_doctor(doctor_id: int, patient_id: int, token:BaseToken=Depends(JWTBearer())):
     doctor = user_service.asign_patient_to_doctor(doctor_id, patient_id)
     return doctor

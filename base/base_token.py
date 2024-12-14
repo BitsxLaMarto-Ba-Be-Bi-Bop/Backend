@@ -7,11 +7,13 @@ import jwt
 
 from dateutil import parser
 
+from user.service import UserService
+
 ACCESS_TOKEN_EXPIRE_MINUTES = 3000
 SECRET_KEY = 'secret'
 ALGORITHM='HS256'
 class BaseToken:
-    # user_service = UserService()
+    user_service = UserService()
 
     id: int = 0
     expt: int = 0
@@ -79,7 +81,7 @@ class BaseToken:
         dict = BaseToken.decode(token)
         user = BaseToken.user_service.get_by_id(dict["id"])
         if user.type != UserType(dict["type"]):
-            print(f'{user.type} {dict["type"]}')
+            # print(f'{user.type} {dict["type"]}')
             raise HTTPException(
                 status_code=HTTPStatus.UNAUTHORIZED,
                 detail="Invalid authentication credentials",
@@ -96,11 +98,12 @@ class BaseToken:
                 detail="Invalid authentication credentials",)
         return True
 
-    # @classmethod
-    # def get_data(token: str):
+    @staticmethod
+    def get_data(token: str):
     #     # return BaseToken(None).from_token(token)
     #     # type = TokenType.ACCESS.value
     #     # if not BaseToken.is_service(token):
-    #     type = BaseToken.decode(token).get('token_type')
+    #     #     type = TokenType.AccessToken.value
     #     if type == TokenType.AccessToken.value:
     #         return AccesToken(None).from_token(token)
+        return BaseToken(None).from_token(token)
