@@ -8,6 +8,9 @@ from base.base_token import BaseToken
 from base.jwt_bearer import JWTBearer
 from user.model import User
 from user.router import router as user
+from appointment.router import router as appointment
+from hospital.router import router as hospital
+
 from base.settings import Settings
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -23,6 +26,8 @@ connect_args = {"check_same_thread": False}
 engine = create_engine(Settings.database_url, connect_args=connect_args)
 BaseModel.metadata.create_all(engine)
 app.include_router(user)
+app.include_router(appointment)
+app.include_router(hospital)
 
 app.add_middleware(
     CORSMiddleware,

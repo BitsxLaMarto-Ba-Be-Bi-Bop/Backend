@@ -1,3 +1,4 @@
+from fastapi_sqlalchemy import db
 from appointment.model import Appointment
 from base.base_service import BaseService
 
@@ -12,3 +13,6 @@ class AppointmentService(BaseService):
         self.update(appointment)
         return appointment
     
+
+    def get_mine(self, patient_id: int):
+        return db.session.query(Appointment).filter(Appointment.patient_id == patient_id).all()

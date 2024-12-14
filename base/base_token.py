@@ -18,6 +18,7 @@ class BaseToken:
     id: int = 0
     expt: int = 0
     email: str = ''
+    name: str = ''
     type: str = ''
     # available: bool = True
     # roles: str = ''
