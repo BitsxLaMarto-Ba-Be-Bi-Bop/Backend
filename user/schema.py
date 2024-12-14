@@ -7,6 +7,7 @@ class UserGet(BaseSchema):
     email : str
 
 class UserCreate(BaseSchema):
-    nama : str
+    name : str
+    nif: str
     email : str
     password : str
