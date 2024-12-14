@@ -154,3 +154,7 @@ class HospitalService(BaseService):
         db.session.add_all(o_data)
         db.session.commit()
         return o_data
+    
+    def delete_all(self):
+        db.session.query(Hospital).delete()
+        db.session.commit()

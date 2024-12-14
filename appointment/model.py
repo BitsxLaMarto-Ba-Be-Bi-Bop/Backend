@@ -15,3 +15,7 @@ class Appointment(BaseModel):
     reason: str = Column(String, nullable=False)
     doctor = relationship("UserDoctor", foreign_keys=[doctor_id])
     patient = relationship("UserPatient", foreign_keys=[patient_id])
+
+    @property
+    def doctor_name(self):
+        return self.doctor.name

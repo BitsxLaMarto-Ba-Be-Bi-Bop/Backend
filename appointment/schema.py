@@ -14,3 +14,4 @@ class AppointmentGet(BaseSchema):
     patient_id: int
     appointment_date: datetime
     reason:str
+    doctor_name: str
