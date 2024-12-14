@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from base.base_model import BaseModel
 from base.base_schema import BaseSchema
 from base.base_token import BaseToken
+from user.model import User
 from user.router import router as user
 from base.settings import Settings
 from fastapi.middleware.cors import CORSMiddleware
@@ -37,7 +38,7 @@ class LoginIn(BaseSchema):
 
 @app.post("/login", summary="Authenticate User")
 def login(credentials: LoginIn):
-    user = user_service.get_by_mail(credentials.mail)
+    user:User = user_service.get_by_mail(credentials.mail)
     if user is None:
         return {"message": "Invalid credentials"}
     if not user_service.get_password_hash(credentials.password) == user.hashed_password:

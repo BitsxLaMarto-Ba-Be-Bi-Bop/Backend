@@ -4,17 +4,17 @@ from fastapi import HTTPException
 from fastapi_sqlalchemy import db
 
 # from src.error import *
-from base.base_model import BaseModel
+from base.base_model import ModelBase
 from base.base_schema import BaseSchema
 
 
 class BaseService:
     name = 'base_service'
-    __model__: BaseModel = None
+    __model__: ModelBase = None
 
     @classmethod
     def get_password_hash(cls, password):
-        return hash(password)
+        return password
 
     @classmethod
     def get_all(cls):

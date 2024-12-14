@@ -55,7 +55,7 @@ def get_trated_patients(doctor_id: int):
     trated_patients = user_service.get_trated_paients(doctor_id)
     return trated_patients
 
-@router.get("/users/doctors")
+@router.get("/users/doctors/")
 def get_doctors():
     doctors = user_service.get_doctors()
     return doctors

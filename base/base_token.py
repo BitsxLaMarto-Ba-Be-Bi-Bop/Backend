@@ -71,7 +71,7 @@ class BaseToken:
     def encode(dict):
         if type(dict['type']) is not str:
             dict['type'] = dict['type'].value
-        return jwt.encode(dict.items(),
+        return jwt.encode(dict,
                           SECRET_KEY,
                           algorithm=ALGORITHM)
 
