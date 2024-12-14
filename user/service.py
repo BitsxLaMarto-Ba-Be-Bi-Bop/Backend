@@ -32,7 +32,7 @@ class UserService(BaseService):
         return doctor
     
     def get_untrated_paients(self):
-        patient_ids = db.session.query(Trates.patient_id).all()
+        patient_ids = [_.patient_id for _ in db.session.query(Trates).all()]
         untrated_patients = db.session.query(UserPatient).filter(UserPatient.id.notin_(patient_ids)).all()
         return untrated_patients
     
