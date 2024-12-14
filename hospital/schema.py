@@ -7,7 +7,7 @@ class HospitalGet(BaseSchema):
     address: str
     phone: str
     lat: float
-    lon: float
+    lng: float
 
 class HospitalCreate(BaseSchema):
     name: str
