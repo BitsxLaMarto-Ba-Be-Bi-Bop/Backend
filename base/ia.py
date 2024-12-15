@@ -69,7 +69,7 @@ class IA:
                 try:
                     # Convert DataFrame to numpy array to remove feature names if needed
                     input_array = input_df.to_numpy()
-                    predictions[model_name] = model.predict(input_array)[0][0]
+                    predictions[model_name] = model.predict(input_array)[0]
                 except Exception as e:
                     print(f"Error predicting with model '{model_name}': {e}")
                     predictions[model_name] = None
