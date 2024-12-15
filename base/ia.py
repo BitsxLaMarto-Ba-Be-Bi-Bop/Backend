@@ -289,7 +289,8 @@ class IA:
     #                     "Necessity of transplantation": self._models[2].predict(self.test(input_data))}
     def predict(self, input_data):
         # Prepare data
-        processed_data = self.test(input_data)
+        # processed_data = self.test(input_data)
+        processed_data = input_data
         input_df = pd.DataFrame([processed_data])  # Convert to DataFrame
 
         # Run predictions
