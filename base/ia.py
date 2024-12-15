@@ -51,7 +51,13 @@ class IA:
         Runs predictions for all models using input_data.
         """
         try:
-            input_df = pd.DataFrame([input_data])  # Convert to DataFrame
+            # Ensure input_data is a dictionary-like structure
+            if isinstance(input_data, dict):
+                input_df = pd.DataFrame([input_data])  # Convert to DataFrame
+            else:
+                # Attempt to convert non-dict input_data into a dict, if possible
+                input_dict = vars(input_data) if hasattr(input_data, '__dict__') else dict(input_data)
+                input_df = pd.DataFrame([input_dict])  # Convert to DataFrame
         except Exception as e:
             print(f"Error creating DataFrame from input data: {e}")
             return None
@@ -68,3 +74,4 @@ class IA:
             else:
                 predictions[model_name] = None
         return predictions
+
