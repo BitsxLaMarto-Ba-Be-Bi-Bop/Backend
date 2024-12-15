@@ -53,8 +53,8 @@ def get_untrated_patients(token:BaseToken=Depends(JWTBearer())):
     return untrated_patients
 
 @router.get("/users/patients/trated/{doctor_id}")
-def get_trated_patients(doctor_id: int, token:BaseToken=Depends(JWTBearer())):
-    trated_patients = user_service.get_trated_paients(doctor_id)
+def get_trated_patients(doctor_id, token:BaseToken=Depends(JWTBearer())):
+    trated_patients = user_service.get_trated_paients(token.id)
     return trated_patients
 
 @router.get("/users/doctors/")
