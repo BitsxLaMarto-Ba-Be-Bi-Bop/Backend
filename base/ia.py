@@ -242,10 +242,15 @@ class IA:
 
 
 
+    # def test(self, dict):
+    #     r = {k: 0 for k in self.inp}
+    #     return {k: dict[k] if k in dict else v for k, v in r.items()}
     def test(self, dict):
         r = {k: 0 for k in self.inp}
-        return {k: dict[k] if k in dict else v for k, v in r.items()}
-    
+        result = {k: dict[k] if k in dict else v for k, v in r.items()}
+        print("Test Result:", result)  # Debugging
+        return result
+
     def load_models(self):
         return [self.load_best_model(_, self.model_paths) for _ in self.model_paths.keys()]
     
