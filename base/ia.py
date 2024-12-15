@@ -55,23 +55,26 @@ class IA:
             if isinstance(input_data, dict):
                 input_df = pd.DataFrame([input_data])  # Convert to DataFrame
             else:
-                # Attempt to convert non-dict input_data into a dict, if possible
                 input_dict = vars(input_data) if hasattr(input_data, '__dict__') else dict(input_data)
                 input_df = pd.DataFrame([input_dict])  # Convert to DataFrame
         except Exception as e:
             print(f"Error creating DataFrame from input data: {e}")
             return None
 
+        # Convert DataFrame to numpy array for compatibility with models
+        input_array = input_df.to_numpy()
+
         # Run predictions
         predictions = {}
         for model_name, model in zip(self.model_paths.keys(), self._models):
             if model:
                 try:
-                    predictions[model_name] = model.predict(input_df)  # Ensure model compatibility
+                    predictions[model_name] = model.predict(input_array)  # Pass numpy array
                 except Exception as e:
                     print(f"Error predicting with model '{model_name}': {e}")
                     predictions[model_name] = None
             else:
                 predictions[model_name] = None
         return predictions
+
 
