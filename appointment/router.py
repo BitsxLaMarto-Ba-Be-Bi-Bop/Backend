@@ -27,7 +27,7 @@ def get_appoinment(id: int):
 
 @router.put("/appoinments/{id}")
 def update_appoinment(id: int, payload: AppointmentCreate):
-    return appointment_service.update(id, payload)
+    return appointment_service.update(id, payload.to_dict())
 
 
 @router.delete("/appoinments/{id}")
