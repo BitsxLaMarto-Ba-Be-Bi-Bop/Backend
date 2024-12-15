@@ -108,10 +108,17 @@ class IA:
     # def test(self, dict):
     #     r = {k: 0 for k in self.inp}
     #     return {k: dict[k] if k in dict else v for k, v in r.items()}
-    def test(self, dict):
-        r = {k: 0 for k in self.inp}
-        result = {k: dict[k] if k in dict else v for k, v in r.items()}
-        print("Test Result:", result)  # Debugging
+    def test(self, input_data):
+        """
+        Ensures all expected input features are present, assigning default values if not provided.
+        """
+        # Initialize a dictionary with all expected features set to 0
+        result = {k: 0 for k in self.inp}
+        
+        # Update with input_data values where available
+        result.update({k: input_data[k] for k in input_data if k in self.inp})
+        
+        print("Processed Input Data:", result)  # Debugging
         return result
 
     def load_models(self):
@@ -144,21 +151,33 @@ class IA:
     # Diccionario con las rutas de los modelos subidos
 
 
-    # Ejemplo de uso
-    # model = load_best_model("Death", model_paths)
+    
+
     def predict(self, input_data):
+        """
+        Runs predictions for all models using input_data.
+        """
         # Prepare data
-        processed_data = self.test(input_data)
-        input_df = pd.DataFrame([processed_data])  # Convert to DataFrame
+        processed_data = self.test(input_data)  # Ensure feature completeness
+        try:
+            input_df = pd.DataFrame([processed_data])  # Convert to DataFrame
+        except Exception as e:
+            print(f"Error creating DataFrame from input data: {e}")
+            return None
 
         # Run predictions
         predictions = {}
         for model_name, model in zip(self.model_paths.keys(), self._models):
             if model:
-                predictions[model_name] = model.predict(input_df)
+                try:
+                    predictions[model_name] = model.predict(input_df)  # Ensure model compatibility
+                except Exception as e:
+                    print(f"Error predicting with model '{model_name}': {e}")
+                    predictions[model_name] = None
             else:
                 predictions[model_name] = None
         return predictions
+
 
     
     def predict_with_model(self, input_data, target, model_dir="best_models"):
