@@ -47,35 +47,35 @@ class IA:
             return None
 
     def predict(self, input_data):
-        print(input_data)
         """
         Runs predictions for all models using input_data.
         """
+        print(input_data)
         try:
-            # Ensure input_data is a dictionary-like structure
-            if isinstance(input_data, dict):
-                input_df = pd.DataFrame([input_data])  # Convert to DataFrame
-            else:
-                input_dict = vars(input_data) if hasattr(input_data, '__dict__') else dict(input_data)
-                input_df = pd.DataFrame([input_dict])  # Convert to DataFrame
+            # Ensure input_data is a dictionary
+            if not isinstance(input_data, dict):
+                raise ValueError("Input data must be a dictionary.")
+
+            # Convert input data to a DataFrame
+            input_df = pd.DataFrame([input_data])  # Wrap in a list to create a single-row DataFrame
         except Exception as e:
             print(f"Error creating DataFrame from input data: {e}")
             return None
-
-        # Convert DataFrame to numpy array for compatibility with models
-        input_array = input_df.to_numpy()
 
         # Run predictions
         predictions = {}
         for model_name, model in zip(self.model_paths.keys(), self._models):
             if model:
                 try:
-                    predictions[model_name] = model.predict(input_array)  # Pass numpy array
+                    # Convert DataFrame to numpy array to remove feature names if needed
+                    input_array = input_df.to_numpy()
+                    predictions[model_name] = model.predict(input_array)
                 except Exception as e:
                     print(f"Error predicting with model '{model_name}': {e}")
                     predictions[model_name] = None
             else:
                 predictions[model_name] = None
         return predictions
+
 
 
