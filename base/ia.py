@@ -47,6 +47,7 @@ class IA:
             return None
 
     def predict(self, input_data):
+        print(input_data)
         """
         Runs predictions for all models using input_data.
         """
