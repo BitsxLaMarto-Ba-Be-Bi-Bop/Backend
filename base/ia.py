@@ -288,19 +288,36 @@ class IA:
     #                     "Binary diagnosis": self._models[1].predict(self.test(input_data)),
     #                     "Necessity of transplantation": self._models[2].predict(self.test(input_data))}
     def predict(self, input_data):
-        # Prepare data
-        # processed_data = self.test(input_data)
-        processed_data = input_data
-        input_df = pd.DataFrame([processed_data])  # Convert to DataFrame
+        """
+        Predict outcomes for the input data using loaded models.
 
-        # Run predictions
+        Args:
+            input_data: Dictionary of feature values.
+
+        Returns:
+            Dictionary of predictions for each target variable.
+        """
+        # Validate input data
+        # self.validate_input(input_data)
+
+        # Convert input data to DataFrame
+        try:
+            input_df = pd.DataFrame([input_data])  # DataFrame expects a list of dictionaries
+        except Exception as e:
+            raise ValueError(f"Error converting input data to DataFrame: {e}")
+
+        # Run predictions using loaded models
         predictions = {}
         for model_name, model in zip(self.model_paths.keys(), self._models):
             if model:
-                predictions[model_name] = model.predict(input_df)
+                try:
+                    predictions[model_name] = model.predict(input_df)[0]  # Get the single prediction
+                except Exception as e:
+                    predictions[model_name] = f"Prediction error: {e}"
             else:
-                predictions[model_name] = None
+                predictions[model_name] = None  # No model loaded for this target
         return predictions
+
 
     def predict_with_model(self, input_data, target, model_dir="best_models"):
 
