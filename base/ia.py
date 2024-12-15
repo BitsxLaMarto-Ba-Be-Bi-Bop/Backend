@@ -50,7 +50,7 @@ class IA:
         """
         Runs predictions for all models using input_data.
         """
-        print(input_data)
+        # print(input_data)
         try:
             # Ensure input_data is a dictionary
             if not isinstance(input_data, dict):
@@ -75,6 +75,7 @@ class IA:
                     predictions[model_name] = None
             else:
                 predictions[model_name] = None
+        print(predictions)
         return predictions
 
 

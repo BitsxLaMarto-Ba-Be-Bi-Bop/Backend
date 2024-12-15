@@ -45,7 +45,10 @@ class LoginIn(BaseSchema):
 @app.post("/predict", summary="Predict")
 def predict(data: dict):
     ia=IA()
-    return ia.predict(data)
+    predictions=ia.predict(data)
+    if predictions is None:
+        return {"error": "Prediction failed"}
+    return {"predictions": predictions}
 @app.post("/login", summary="Authenticate User")
 def login(credentials: LoginIn):
     user:User = user_service.get_by_mail(credentials.mail)
