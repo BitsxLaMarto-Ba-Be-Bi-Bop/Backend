@@ -297,26 +297,33 @@ class IA:
         Returns:
             Dictionary of predictions for each target variable.
         """
-        # Validate input data
-        # self.validate_input(input_data)
+        # Ensure input data is a dictionary with scalar values
+        if not isinstance(input_data, dict):
+            raise ValueError("Input data must be a dictionary of feature names and scalar values.")
+        
+        # Validate scalar values
+        for key, value in input_data.items():
+            if isinstance(value, (list, dict)):
+                raise ValueError(f"Invalid value for key '{key}': expected scalar, got {type(value).__name__}")
 
-        # Convert input data to DataFrame
+        # Convert to DataFrame
         try:
-            input_df = pd.DataFrame([input_data])  # DataFrame expects a list of dictionaries
+            input_df = pd.DataFrame([input_data])  # Single-row DataFrame
         except Exception as e:
             raise ValueError(f"Error converting input data to DataFrame: {e}")
 
-        # Run predictions using loaded models
+        # Run predictions
         predictions = {}
         for model_name, model in zip(self.model_paths.keys(), self._models):
             if model:
                 try:
-                    predictions[model_name] = model.predict(input_df)[0]  # Get the single prediction
+                    predictions[model_name] = model.predict(input_df)[0]  # Get the first (and only) prediction
                 except Exception as e:
                     predictions[model_name] = f"Prediction error: {e}"
             else:
-                predictions[model_name] = None  # No model loaded for this target
+                predictions[model_name] = None  # No model loaded
         return predictions
+
 
 
     def predict_with_model(self, input_data, target, model_dir="best_models"):
