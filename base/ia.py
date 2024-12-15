@@ -283,11 +283,24 @@ class IA:
 
     # Ejemplo de uso
     # model = load_best_model("Death", model_paths)
+    # def predict(self, input_data):
+    #     return {"Death": self._models[0].predict(self.test(input_data)),
+    #                     "Binary diagnosis": self._models[1].predict(self.test(input_data)),
+    #                     "Necessity of transplantation": self._models[2].predict(self.test(input_data))}
     def predict(self, input_data):
-        return {"Death": self._models[0].predict(self.test(input_data)),
-                        "Binary diagnosis": self._models[1].predict(self.test(input_data)),
-                        "Necessity of transplantation": self._models[2].predict(self.test(input_data))}
-    
+        # Prepare data
+        processed_data = self.test(input_data)
+        input_df = pd.DataFrame([processed_data])  # Convert to DataFrame
+
+        # Run predictions
+        predictions = {}
+        for model_name, model in zip(self.model_paths.keys(), self._models):
+            if model:
+                predictions[model_name] = model.predict(input_df)
+            else:
+                predictions[model_name] = None
+        return predictions
+
     def predict_with_model(self, input_data, target, model_dir="best_models"):
 
         # Comprovar si el target és vàlid
