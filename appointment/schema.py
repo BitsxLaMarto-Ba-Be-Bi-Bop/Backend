@@ -8,6 +8,7 @@ class AppointmentCreate(BaseSchema):
     patient_id: int
     appointment_date: datetime
     reason:str
+    doctor_acception: bool = False
 
 class AppointmentGet(BaseSchema):
     doctor_id: int
