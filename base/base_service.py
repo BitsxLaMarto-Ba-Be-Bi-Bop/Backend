@@ -35,7 +35,7 @@ class BaseService:
         return instance
     
     @classmethod
-    def update(cls, id, **kwargs):
+    def update(cls, id, kwargs):
         instance = cls.get_by_id(id)
         for attr, value in kwargs.items():
             setattr(instance, attr, value)
